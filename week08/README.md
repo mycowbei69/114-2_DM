@@ -5,9 +5,9 @@
 | 項目 | 說明 |
 |------|------|
 | 對應教科書 | Ch11 交叉驗證、Ch12 模型參數挑選和網格搜尋 |
-| 繳交方式 | 在 Fork 的 week08/ 資料夾中建立三個檔案，發 PR 繳交 |
+| 繳交方式 | 在 Fork 的 week08/ 資料夾中建立三個檔案，push 到 Fork |
 | 繳交期限 | 下週上課前 |
-| PR 標題格式 | 學號_姓名_week08 |
+| PR 標題 | 學號_姓名（僅首次繳交時建立，之後 push 自動更新） |
 
 ---
 
@@ -208,8 +208,8 @@ A3：???
 - [ ] week08/q1_cross_validation.txt 包含完整程式碼與四模型交叉驗證比較
 - [ ] week08/q2_grid_search.txt 包含完整程式碼與 GridSearchCV 結果
 - [ ] week08/q3_concept.txt 包含三題觀念回答
-- [ ] 已 push 到自己的 Fork
-- [ ] 已發 PR，標題格式：學號_姓名_week08
+- [ ] 已 push 到自己的 Fork（W3 已建立的 PR 會自動更新）
+- [ ] 已確認 PR 中可看到本週 commit
 
 ## 常見問題
 

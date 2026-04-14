@@ -5,9 +5,9 @@
 | 項目 | 說明 |
 |------|------|
 | 對應教科書 | Ch3 資料預處理 |
-| 繳交方式 | 在 Fork 的 week03/ 資料夾中建立四個檔案，發 PR 繳交 |
+| 繳交方式 | 在 Fork 的 week03/ 資料夾中建立四個檔案，push 到 Fork |
 | 繳交期限 | 下週上課前 |
-| PR 標題格式 | 學號_姓名_week03 |
+| PR 標題 | 學號_姓名（僅首次繳交時建立，之後 push 自動更新） |
 
 ---
 
@@ -15,7 +15,7 @@
 
 ### 任務說明
 
-本題的目的是確認你能順利完成 Fork → 建立檔案 → Commit → Push → 發 PR 的完整流程。只要成功發出 PR 且檔案內容正確，就能拿到滿分。
+本題的目的是確認你能順利完成 Fork → 建立檔案 → Commit → Push → 建立 PR（首次）的完整流程。只要成功發出 PR 且檔案內容正確，就能拿到滿分。
 
 ### 操作步驟
 
@@ -23,7 +23,7 @@
 2. 在你的 Fork 中建立 `week03/` 資料夾
 3. 在 `week03/` 中建立 `q1_hello.txt`
 4. 填入以下內容後 Commit 並 Push
-5. 到 GitHub 網頁發 Pull Request 回老師的 Repo
+5. 到 GitHub 網頁發 Pull Request 回老師的 Repo（僅首次需要，之後每週 push 會自動更新此 PR）
 
 ### 作答內容
 
@@ -267,8 +267,8 @@ A3：???
 - [ ] week03/q2_preprocessing.txt 包含完整程式碼與 Pipeline 處理結果
 - [ ] week03/q3_column_transformer.txt 包含完整程式碼與 ColumnTransformer 輸出結果
 - [ ] week03/q4_concept.txt 包含三題觀念回答
-- [ ] 已 push 到自己的 Fork
-- [ ] 已發 PR，標題格式：學號_姓名_week03
+- [ ] 已建立 PR（首次繳交才需要，標題：學號_姓名）
+- [ ] 已 push 到 Fork（確認 PR 中可看到本週 commit）
 
 ## 常見問題
 
