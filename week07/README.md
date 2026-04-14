@@ -405,11 +405,16 @@ $$\hat{y} = 0.05 \times 200 + 0.10 \times 30 + 0.08 \times 50 + 5 = 10 + 3 + 4 +
 
 ```python
 # 匯入羅吉斯迴歸相關套件
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression       # 羅吉斯迴歸（分類用）
 from sklearn.preprocessing import StandardScaler          # 標準化（讓特徵量級一致）
 from sklearn.pipeline import Pipeline                     # 管道器（串接多個步驟）
 from sklearn.metrics import (classification_report, confusion_matrix,
-                             ConfusionMatrixDisplay, roc_curve, auc)  # 分類評估工具
+                             ConfusionMatrixDisplay, roc_curve, auc,
+                             accuracy_score)               # 分類評估工具
 
 # === 載入鐵達尼號資料 ===
 # 線上載入（從 GitHub 下載 CSV）
