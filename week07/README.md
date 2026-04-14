@@ -269,6 +269,94 @@ print(f'  截距: {lr_multi.intercept_:.4f}')
 >
 > $$\text{銷售額} = \beta_1 \times \text{電視} + \beta_2 \times \text{廣播} + \beta_3 \times \text{網路} + \alpha$$
 
+### 多元迴歸的公式推導（矩陣形式）
+
+> 多元迴歸有多個特徵，無法像簡單迴歸一樣用單一公式直接算。改用**矩陣**一次解出所有係數。
+
+**矩陣表示法**：把所有資料寫成矩陣形式：
+
+$$\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+
+其中：
+- $\mathbf{X}$：特徵矩陣（每列一筆資料，每行一個特徵，最前面加一行全 1 代表截距）
+- $\boldsymbol{\beta}$：係數向量 $[\alpha, \beta_1, \beta_2, \beta_3]^T$（要求解的未知數）
+- $\mathbf{y}$：實際值向量
+- $\boldsymbol{\epsilon}$：誤差向量
+
+**最小平方法的矩陣解**（Normal Equation）：
+
+$$\boldsymbol{\beta} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}$$
+
+意義：這個公式一步算出所有係數，讓誤差平方和最小。Python 的 `LinearRegression().fit()` 內部就是在算這個。
+
+---
+
+**數字範例**：用 4 筆簡化資料手算多元迴歸（2 個特徵）
+
+| 資料點 | 電視 $x_1$ | 廣播 $x_2$ | 銷售 $y$ |
+|--------|-----------|-----------|---------|
+| 1 | 10 | 5 | 8 |
+| 2 | 20 | 10 | 13 |
+| 3 | 30 | 5 | 14 |
+| 4 | 40 | 10 | 19 |
+
+**Step 1：建立矩陣**（第一行補 1 代表截距）
+
+$$\mathbf{X} = \begin{bmatrix} 1 & 10 & 5 \\ 1 & 20 & 10 \\ 1 & 30 & 5 \\ 1 & 40 & 10 \end{bmatrix} \qquad \mathbf{y} = \begin{bmatrix} 8 \\ 13 \\ 14 \\ 19 \end{bmatrix}$$
+
+**Step 2：計算 $\mathbf{X}^T \mathbf{X}$**（特徵矩陣的轉置 × 特徵矩陣）
+
+$$\mathbf{X}^T \mathbf{X} = \begin{bmatrix} 1 & 1 & 1 & 1 \\ 10 & 20 & 30 & 40 \\ 5 & 10 & 5 & 10 \end{bmatrix} \begin{bmatrix} 1 & 10 & 5 \\ 1 & 20 & 10 \\ 1 & 30 & 5 \\ 1 & 40 & 10 \end{bmatrix} = \begin{bmatrix} 4 & 100 & 30 \\ 100 & 3000 & 800 \\ 30 & 800 & 250 \end{bmatrix}$$
+
+**Step 3：計算 $\mathbf{X}^T \mathbf{y}$**
+
+$$\mathbf{X}^T \mathbf{y} = \begin{bmatrix} 1 & 1 & 1 & 1 \\ 10 & 20 & 30 & 40 \\ 5 & 10 & 5 & 10 \end{bmatrix} \begin{bmatrix} 8 \\ 13 \\ 14 \\ 19 \end{bmatrix} = \begin{bmatrix} 54 \\ 1550 \\ 435 \end{bmatrix}$$
+
+驗算：$1 \times 8 + 1 \times 13 + 1 \times 14 + 1 \times 19 = 54$ ✓
+
+**Step 4：求解 $\boldsymbol{\beta} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}$**
+
+這一步需要算 3×3 矩陣的反矩陣再相乘，手算較複雜，實務上交給 Python：
+
+```python
+import numpy as np
+X = np.array([[1,10,5],[1,20,10],[1,30,5],[1,40,10]])
+y = np.array([8, 13, 14, 19])
+beta = np.linalg.inv(X.T @ X) @ X.T @ y
+print(f'截距 α = {beta[0]:.4f}')
+print(f'電視 β1 = {beta[1]:.4f}')
+print(f'廣播 β2 = {beta[2]:.4f}')
+```
+
+**結果**：
+
+| 係數 | 值 | 意義 |
+|------|-----|------|
+| $\alpha$（截距） | 2.0 | 不打任何廣告時的基礎銷售 |
+| $\beta_1$（電視） | 0.3 | 電視每多花 1 萬 → 銷售增 0.3 萬 |
+| $\beta_2$（廣播） | 0.4 | 廣播每多花 1 萬 → 銷售增 0.4 萬 |
+
+迴歸方程：$\hat{y} = 0.3 x_1 + 0.4 x_2 + 2.0$
+
+**Step 5：驗證——預測每筆資料**
+
+| 資料點 | $x_1$ | $x_2$ | 實際 $y$ | 預測 $\hat{y}$ | 誤差 | 誤差² |
+|--------|-------|-------|---------|---------------|------|-------|
+| 1 | 10 | 5 | 8 | $0.3 \times 10 + 0.4 \times 5 + 2 = 7$ | +1 | 1 |
+| 2 | 20 | 10 | 13 | $0.3 \times 20 + 0.4 \times 10 + 2 = 12$ | +1 | 1 |
+| 3 | 30 | 5 | 14 | $0.3 \times 30 + 0.4 \times 5 + 2 = 13$ | +1 | 1 |
+| 4 | 40 | 10 | 19 | $0.3 \times 40 + 0.4 \times 10 + 2 = 18$ | +1 | 1 |
+| | | | | | **合計** | **4** |
+
+誤差平方和 = 4，是這組資料所有可能平面中的最小值。
+
+> **簡單迴歸 vs 多元迴歸的幾何比喻**：
+> - 簡單迴歸：在 2D 平面上找**最佳直線**
+> - 多元迴歸（2 個特徵）：在 3D 空間中找**最佳平面**
+> - 多元迴歸（3+ 個特徵）：在高維空間中找**最佳超平面**
+
+---
+
 **數字範例**：假設模型學到的係數為：
 
 | 特徵 | 係數 $\beta$ | 意義 |
