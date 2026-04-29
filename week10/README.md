@@ -139,7 +139,7 @@ Colab：[12 模型參數挑選和網格搜尋](https://colab.research.google.com
 
 ## 四、課後作業（4 題 · 三家 AI 工具實戰比對）
 
-繳交方式：fork 114-2_DM repo → 在你個人 fork 的 `homework/week10/` 建一個 markdown，回答以下 4 題，提交 Pull Request
+繳交方式：fork 114-2_DM repo → 在你個人 fork 的 `homework/week10/` 建一個 markdown, W10_homework.md，回答以下 4 題，提交 Pull Request
 
 | # | 題目 |
 |---|---|
