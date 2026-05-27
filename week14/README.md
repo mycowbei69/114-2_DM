@@ -4,7 +4,7 @@
   - 該程式區塊的功能說明
 - 放置於README.MD中
 
-#W14-Exercise
+# W14-Exercise
 ## Error01
 ValueError: 這個錯誤 ValueError: could not convert string to float: 'sales' 的意思是，當您嘗試計算 DataFrame 的相關性（df.corr()）時，Python 發現其中有非數值型的資料，例如 'sales' 這個欄位是字串（物件型別），而相關性只能對數值型資料進行計算。因為 'sales' 無法被轉換成浮點數，所以會拋出這個錯誤。
 
