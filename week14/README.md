@@ -23,3 +23,16 @@ sns.heatmap(df.select_dtypes(include=np.number).corr().round(2), annot=True, cma
 - sns.heatmap(...)：sns 是 Seaborn 函式庫的別名，Seaborn 是一個基於 Matplotlib 的資料視覺化函式庫。heatmap() 是 Seaborn 中用於繪製熱力圖的函式。熱力圖是一種用顏色深淺來表示數值大小的圖表。									
 - annot=True：這是 heatmap() 函式的一個參數，設定為 True 時，會在熱力圖的每個方格內顯示對應的相關係數數值，方便直接讀取。
 - cmap='coolwarm'：這是 heatmap() 函式用來指定色彩映射的參數。'coolwarm' 是一種發散型色圖，通常用於表示從負值到正值的區間：冷色系（藍色）表示負相關，暖色系（紅色）表示正相關，中間顏色（白色/淺色）表示接近零的相關性。
+
+- ## Error02
+- 這個錯誤 ValueError: could not convert string to float: 'sales' 表示 corrwith() 函式嘗試對非數值型的 'sales' 欄位計算相關性，這是不允許的。就像之前的錯誤一樣，相關性計算需要數值資料。我將修改程式碼，使其只對數值型欄位計算與 'left' 欄位的相關性。
+```
+- # df.drop('left', axis=1).corrwith(df['left']).round(2)
+df.drop('left', axis=1).select_dtypes(include=np.number).corrwith(df['left']).round(2)
+```
+這些數值有助於我們理解哪些因素對員工離職的決策影響較大。
+- satisfaction_level (滿意度): 與離職呈現顯著的負相關 (-0.39)，這表示員工滿意度越低，離職的可能性越高。
+- last_evaluation (上次考評)、number_project (專案數量)、average_montly_hours (平均月工時) 與離職呈現微弱的正相關，表示這些因素稍微增加時，離職的可能性也略有上升。
+- time_spend_company (在公司待的年數): 與離職呈現正相關 (0.14)，這可能暗示了在公司待太久也可能導致離職（例如職業倦怠或尋求新挑戰）。
+- Work_accident (工作事故): 與離職呈現負相關 (-0.15)，表示曾有工作事故的員工離職的可能性較低。
+- promotion_last_5years (過去五年是否晉升): 與離職呈現負相關 (-0.06)，表示最近有晉升的員工離職的可能性較低。
