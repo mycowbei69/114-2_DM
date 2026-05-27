@@ -24,7 +24,7 @@ sns.heatmap(df.select_dtypes(include=np.number).corr().round(2), annot=True, cma
 - annot=True：這是 heatmap() 函式的一個參數，設定為 True 時，會在熱力圖的每個方格內顯示對應的相關係數數值，方便直接讀取。
 - cmap='coolwarm'：這是 heatmap() 函式用來指定色彩映射的參數。'coolwarm' 是一種發散型色圖，通常用於表示從負值到正值的區間：冷色系（藍色）表示負相關，暖色系（紅色）表示正相關，中間顏色（白色/淺色）表示接近零的相關性。
 
-- ## Error02
+## Error02
 - 這個錯誤 ValueError: could not convert string to float: 'sales' 表示 corrwith() 函式嘗試對非數值型的 'sales' 欄位計算相關性，這是不允許的。就像之前的錯誤一樣，相關性計算需要數值資料。我將修改程式碼，使其只對數值型欄位計算與 'left' 欄位的相關性。
 ```
 - # df.drop('left', axis=1).corrwith(df['left']).round(2)
