@@ -36,7 +36,7 @@ df.drop('left', axis=1).select_dtypes(include=np.number).corrwith(df['left']).ro
 - Work_accident (工作事故): -0.15 - 呈現弱的負相關，表示發生工作事故的員工離職的可能性略低。
 - promotion_last_5years (近5年是否晉升): -0.06 - 呈現弱的負相關，表示近5年有晉升的員工離職的可能性略低。
 總體來看，satisfaction_level 與離職率有最強的負相關，意味著員工滿意度是影響離職與否的重要因素。其他數值型特徵與離職率的線性相關性較弱。
-## ERROR 03
+## Error 03
 
 ```
 # print('正確率：', accuracy_score(y_test, y_pred).round(2))
