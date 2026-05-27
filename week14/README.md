@@ -40,6 +40,6 @@ df.drop('left', axis=1).select_dtypes(include=np.number).corrwith(df['left']).ro
 
 ```
 # print('正確率：', accuracy_score(y_test, y_pred).round(2))
-print('正確率：', accuracy_score(y_test, y_pred).round(2))
+print('正確率：', round(accuracy_score(y_test, y_pred), 2))
 
 ```
