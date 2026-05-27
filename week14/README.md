@@ -44,5 +44,12 @@ print('正確率：', round(accuracy_score(y_test, y_pred), 2))
 
 ```
 ## Error 04
+```
+print('測試集的結果', round(score, 3))
+```
 ## Error 05
-## Error 06
+```
+# print('測試集的結果', score.round(3))
+print('測試集的結果', round(score, 3))
+```
+
