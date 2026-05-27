@@ -36,3 +36,46 @@ df.drop('left', axis=1).select_dtypes(include=np.number).corrwith(df['left']).ro
 - time_spend_company (在公司待的年數): 與離職呈現正相關 (0.14)，這可能暗示了在公司待太久也可能導致離職（例如職業倦怠或尋求新挑戰）。
 - Work_accident (工作事故): 與離職呈現負相關 (-0.15)，表示曾有工作事故的員工離職的可能性較低。
 - promotion_last_5years (過去五年是否晉升): 與離職呈現負相關 (-0.06)，表示最近有晉升的員工離職的可能性較低。
+
+## Error03
+這個錯誤 AttributeError: 'float' object has no attribute 'round' 表示 accuracy_score 函式返回的浮點數無法直接使用 .round() 方法。這可能是環境配置或 Python 版本的問題。為了解決這個問題，我會將 .round(2) 的寫法改為使用 Python 內建的 round() 函式，確保程式碼能正確執行。
+```
+# print('正確率：', accuracy_score(y_test, y_pred).round(2))
+print('正確率：', round(accuracy_score(y_test, y_pred), 2))
+```
+以下是結果的解釋：
+- 正確率 (Accuracy)：0.76，這表示模型有 76% 的預測是正確的。由於模型總是預測多數類別 '0'，而測試集中 '0' 類別的佔比是 76% (3428 / 4500 ≈ 0.76)，所以這個結果是符合預期的。
+- 混亂矩陣 (Confusion Matrix)：[[3428    0][1072    0]]，第一行 [3428 0] 表示模型將 3428 位實際為 '0' (不離職) 的員工正確預測為 '0'，沒有將 '0' 預測成 '1' (離職)。第二行 [1072 0] 表示模型將 1072 位實際為 '1' (離職) 的員工錯誤地預測為 '0'，也沒有將 '1' 正確預測為 '1'。這再次確認了模型從未預測 '1'。
+- 綜合報告 (Classification Report)：類別 0 (不離職)：precision (精確率): 0.76 - 在所有被預測為 '0' 的員工中，有 76% 確實為 '0'。recall (召回率): 1.00 - 在所有實際為 '0' 的員工中，有 100% 被模型正確地預測為 '0'。f1-score: 0.86 - 精確率和召回率的調和平均數。類別 1 (離職)：precision: 0.00 - 因為模型從未預測 '1'，所以精確率為 0。recall: 0.00 - 在所有實際為 '1' 的員工中，沒有任何一位被模型正確地預測為 '1'。f1-score: 0.00。
+總結： 這個 DummyClassifier 模型的表現很差，尤其是在預測 '1' 類別 (員工離職) 時，完全沒有能力。它只是一個基準線，用來展示即使不做任何複雜分析，只憑藉多數原則也能達到的最低正確率。任何有用的機器學習模型都應該在預測 '1' 類別上表現得遠比這個模型好。
+
+## Error04
+這個錯誤 AttributeError: 'float' object has no attribute 'round' 的意思是，score 變數是一個浮點數，但是您嘗試用 .round() 方法來對它進行四捨五入，而浮點數物件本身沒有這個方法。Python 中應該使用內建的 round() 函式來處理。我將會修改程式碼，將 score.round(3) 改為 round(score, 3) 來修正這個問題。
+```
+# print('測試集的結果', score.round(3))
+print('測試集的結果', round(score, 3))
+```
+儲存格 0WNWjPftwiQb 已經成功執行。以下是 GridSearchCV 模型的結果解釋：
+- 最佳預測參數 (最佳預測參數 {'model': DecisionTreeClassifier(max_depth=10)})：這表示在您設定的模型候選中，GridSearchCV 認為 DecisionTreeClassifier (決策樹分類器) 搭配 max_depth=10 是表現最好的模型。
+- 訓練集交叉驗證的最佳結果 (訓練集交叉驗證的最佳結果 0.979)：這是模型在訓練數據上經過5折交叉驗證後得到的平均最佳準確度，高達 0.979，表明模型在訓練數據上表現非常優秀。
+- 測試集的結果 (測試集的結果 0.977)：這是模型在從未見過的測試數據上的準確度，為 0.977。這個結果與訓練集的交叉驗證結果非常接近，說明模型具有很好的泛化能力，並沒有明顯的過擬合現象。
+- 混亂矩陣 (混亂矩陣 [[3394 34] [69 1003]])：混亂矩陣提供了模型在測試集上更詳細的性能指標：3394 (左上角): 模型正確預測了 3394 名未離職的員工 (True Negatives)。34 (右上角): 模型錯誤地將 34 名未離職的員工預測為已離職 (False Positives)。
+69 (左下角): 模型錯誤地將 69 名已離職的員工預測為未離職 (False Negatives)。1003 (右下角): 模型正確預測了 1003 名已離職的員工 (True Positives)。
+總體來看，這個 DecisionTreeClassifier 模型在員工離職預測上的表現非常出色，準確度高且泛化能力強。
+
+## Error05
+這個錯誤 AttributeError: 'float' object has no attribute 'round' 和之前遇到的是一樣的。它表示您嘗試在一個浮點數物件上直接呼叫 .round() 方法，但 Python 的浮點數類型沒有這個方法。正確的作法是使用內建的 round() 函式來進行四捨五入。我將會修改程式碼，將 score.round(3) 改為 round(score, 3)，並將 gs.best_score_.round(3) 改為 round(gs.best_score_, 3) 來修正這個問題。
+```
+# print('測試集的結果', score.round(3))
+print('測試集的結果',round(score, 3))
+# print('訓練集交叉驗證的最佳結果', gs.best_score_.round(3))
+print('訓練集交叉驗證的最佳結果', round(gs.best_score_, 3))
+```
+儲存格 xUcv8-cowiQe 已經成功執行。以下是 GridSearchCV 針對集成模型 (Ensemble Models) 的結果解釋：
+- 最佳預測參數 (最佳預測參數 {'model': RandomForestClassifier()})：這表示在您提供的 RandomForestClassifier、AdaBoostClassifier、BaggingClassifier 和 XGBClassifier 中，GridSearchCV 找到了 RandomForestClassifier 作為最佳的模型。
+- 訓練集交叉驗證的最佳結果 (訓練集交叉驗證的最佳結果 0.988)：這是隨機森林模型在訓練數據上經過5折交叉驗證後得到的平均最佳準確度，高達 0.988。這表明模型在訓練數據上表現非常強勁。
+- 測試集的結果 (測試集的結果 0.986)：這是模型在獨立的測試數據集上的準確度，為 0.986。這個結果與訓練集的交叉驗證結果非常接近，顯示模型具有優異的泛化能力，且沒有出現過度擬合的現象。
+- 混亂矩陣 (混亂矩陣 [[3417 11] [50 1022]])：混亂矩陣提供了模型在測試集上更詳細的性能分析：3417 (True Negatives): 模型正確預測了 3417 名未離職的員工。11 (False Positives): 模型錯誤地將 11 名未離職的員工預測為已離職。50 (False Negatives): 模型錯誤地將 50 名已離職的員工預測為未離職。1022 (True Positives): 模型正確預測了 1022 名已離職的員工。
+綜合來看，隨機森林模型在這個任務上的表現非常出色，具有很高的準確度和很低的錯誤率，特別是在識別已離職員工方面。
+
+
